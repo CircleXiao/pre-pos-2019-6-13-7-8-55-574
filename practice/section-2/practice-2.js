@@ -6,7 +6,7 @@ function countSameElements(collection){
 
   for (let i = 0; i < collection.length; i++) {
     if (collection[i].length != 1) {
-      result.set(collection[i].charAt[0], collection[i].charAt[2]);
+      result.set(collection[i].charAt(0), parseInt(collection[i].charAt(2)));
     } else {
       if (result.get(collection[i]) == null) {
         result.set(collection[i], 1);
@@ -19,4 +19,8 @@ function countSameElements(collection){
   result.forEach(function (key, value) {
     resultList.push({key: value, count: key});
   })
+
+  return resultList;
+
+  console.log(resultList);
 }
