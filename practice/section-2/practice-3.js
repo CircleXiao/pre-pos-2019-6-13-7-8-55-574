@@ -1,52 +1,31 @@
 'use strict';
 
 function countSameElements(collection) {
-
-  var words = [];
-
-  var num = [];
-  function find(arr, word) {
-    var ret = -1;
-    for (var i = 0; i < arr.length; i++) {
-      if (word === arr[i]) {
-        ret = i;
+  const result = new Map();
+  const resultList = [];
+  for (let i = 0; i < collection.length; i++) {
+    if (collection[i].length != 1) {
+      var keyStr = collection[i].charAt(0);
+      var valueNum = parseInt(collection[i].substr(2, collection[i].length-2));
+      if (result.get(keyStr) == null) {
+        result.set(keyStr, valueNum);
+      } else {
+      result.set(keyStr, result.get(keyStr) + valueNum);
       }
-    }
-    return ret;
+    } else {
+      if (result.get(collection[i]) == null) {
+        result.set(collection[i], 1);
+      } else {
+        result.set(collection[i], result.get(collection[i]) + 1);
+      }
+    }   
   }
 
-  function search(arr, word, count) {
-    for (var i = 0; i < arr.length; i++) {
-      var position = find(word, arr[i][0]);
-      if (arr[i].length != 1) {
-        if (position === -1) {
-          word.push(arr[i][0]);
-          count.push(Number(arr[i].match(/\d+/)));
-        }
-        else {
-          count[position] += Number(arr[i].match(/\d+/));
-        }
-      }
-      else {
-        if (position === -1) {
-          word.push(arr[i]);
-          count.push(1);
-        }
-        else {
-          count[position]++;
-        }
-      }
-    }
-  }
+  result.forEach(function (key, value) {
+    resultList.push({name: value, summary: key});
+  });
 
-  function answer() {
-    var answer = [];
-    for (var j = 0; j < words.length; j++) {
-      answer.push({name: words[j], summary: num[j]});
-    }
-    return answer;
-  }
-  search(collection, words, num);
-
-  return answer();
+  console.log(resultList);
+  return resultList;
+  
 }
