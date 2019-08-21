@@ -1,31 +1,19 @@
 'use strict';
 
 function countSameElements(collection) {
-  var words = [];
-  var num = [];
-  var ret ;
-  function find(arr,words) {
-    var ret = -1 ;
-    for (var i = 0 ; i < arr.length ; i ++) {
-        if (words === arr[i]) {
-          ret = i ;
-        }
-    }
-    return ret ;
-  }
-  for (var i = 0 ; i < collection.length ; i ++) {
-    ret = find(words,collection[i]);
-    if (ret === -1) {
-      words.push(collection[i]);
-      num.push(1);
-    }
+  var result = new Map();
+  var resultList = [];
 
-  else
-    num[ret]++ ;
+  for (let i = 0; i < collection.length; i++) { 
+    if (result.get(collection[i]) == null) {
+      result.set(collection[i], 1);
+    } else {
+      result.set(collection[i], result.get(collection[i])+1);
+    }
   }
-  var answer = [];
-  for (var j = 0 ; j < words.length ;j ++) {
-    answer.push({key: words[j], count: num[j]},);
-  }
-  return answer ;
+
+  result.forEach(function (key, value) {
+    resultList.push({key: value, count: key});
+  })
+  return resultList;
 }
