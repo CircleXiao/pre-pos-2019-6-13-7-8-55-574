@@ -21,6 +21,4 @@ function countSameElements(collection){
   })
 
   return resultList;
-
-  console.log(resultList);
 }
