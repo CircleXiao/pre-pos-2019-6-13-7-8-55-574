@@ -1,83 +1,38 @@
 'use strict';
 
+function countSameElements(collection){
+  const resultList = [];
+  const result = new Map();
+
+  for (let i = 0; i < collection.length; i++) {
+    if (collection[i].length != 1) {
+      result.set(collection[i].charAt(0), parseInt(collection[i].charAt(2)));
+    } else {
+      if (result.get(collection[i]) == null) {
+        result.set(collection[i], 1);
+      } else {
+        result.set(collection[i], result.get(collection[i]) + 1);
+      }
+    }   
+  }
+
+  result.forEach(function (key, value) {
+    resultList.push({key: value, count: key});
+  })
+
+  return resultList;
+}
+
 function createUpdatedCollection(collectionA, objectB) {
-  function find(arr, word) {
-    var ret = -1;
-    for (var i = 0; i < arr.length; i++) {
-      if (word === arr[i]) {
-        ret = i;
-      }
-    }
-    return ret;
+  var collectionC = countSameElements(collectionA);
+  var subCollectionB = objectB.value;
+  for (let i = 0; i < subCollectionB.length; i++) {
+    for (let j = 0; j < collectionC.length; j++) {
+      if (subCollectionB[i] === collectionC[j].key) {
+        collectionC[j].count = collectionC[j].count - parseInt(collectionC[j].count / 3);
+        break;
+      }      
+    } 
   }
-
-  function search(arr, word, count) {
-    for (var i = 0; i < arr.length; i++) {
-      var position = find(word, arr[i][0]);
-      if (arr[i].length != 1) {
-        if (position === -1) {
-          word.push(arr[i][0]);
-          count.push(Number(arr[i][2]));
-        }
-        else {
-          count[position] += Number(arr[i][2]);
-        }
-      }
-      else {
-        if (position === -1) {
-          word.push(arr[i]);
-          count.push(1);
-        }
-        else {
-          count[position]++;
-        }
-      }
-    }
-  }
-
-  function getarrC() {
-    var answer = [];
-    for (var j = 0; j < words.length; j++) {
-      answer.push({key: words[j], count: num[j]});
-    }
-    return answer;
-  }
-
-  function output() {
-    var answer = [];
-    for (var k = 0; k < words1.length; k++) {
-      answer.push({key: words1[k], count: num1[k]});
-    }
-    return answer;
-  }
-
-  function match(arrC, objectB, words1, num1) {
-    for (var i = 0; i < arrC.length; i++) {
-      for (var j = 0; j < objectB.value.length; j++) {
-        if (arrC[i].key === objectB.value[j]) {
-          words1.push(arrC[i].key);
-          num1.push(arrC[i].count - parseInt(arrC[i].count / 3));
-          break;
-        }
-      }
-      if (j === objectB.value.length) {
-        words1.push(arrC[i].key);
-        num1.push(arrC[i].count);
-      }
-    }
-  }
-
-  var words = [];
-
-  var num = [];
-  var arrC = [];
-
-
-  var words1 = [];
-
-  var num1 = [];
-  search(collectionA, words, num);
-  arrC = getarrC();
-  match(arrC, objectB, words1, num1);
-  return output();
+  return collectionC;
 }
