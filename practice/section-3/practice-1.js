@@ -6,6 +6,7 @@ function createUpdatedCollection(collectionA, objectB) {
     for (let j = 0; j < collectionA.length; j++) {
       if (subCollectionB[i] === collectionA[j].key) {
         collectionA[j].count--;
+        break;
       }      
     } 
   }
